@@ -8,14 +8,13 @@ json_string = File.read("Apprentice_TandemFor400_Data.json")
 $questions_array = JSON.parse(json_string)
 
 
-$score = 0
-$question_number = 1
-
 #=================================================================
 # Quiz Logic
 #=================================================================
 
 def start_round
+  $score = 0
+  $question_number = 1
 
   # shuffle questions so they are in randon order for every round
   $questions_array.shuffle!
@@ -26,7 +25,8 @@ def start_round
 
     puts "Question #{$question_number}: #{q["question"]}"
 
-    answers = q["incorrect"].push(q["correct"]).shuffle!
+    answers = Array.new(q["incorrect"])
+    answers.push(q["correct"]).shuffle!
 
     for a in answers do
       puts "(#{answers.index(a)}) #{a}"
@@ -35,7 +35,7 @@ def start_round
     response = gets
 
     if answers[response.to_i] == q["correct"]
-      $score += 1
+      $score += 1 # no ++ in ruby?
       puts "That's correct!"
     else
       puts "Sorry, that's incorrect!"
@@ -43,7 +43,7 @@ def start_round
     end
     puts "Score: #{$score} pts"
 
-    $question_number += 1
+    $question_number += 1 # no ++ in ruby?
 
     puts "\n" # new line
   end
