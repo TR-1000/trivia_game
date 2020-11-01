@@ -28,19 +28,25 @@ def start_round
 
     #### shuffle and display answers
     answers = Array.new(q["incorrect"])
-
     answers.push(q["correct"]).shuffle!
-
     answers.each_with_index do |val, idx|
       puts "(#{idx + 1}) #{val}"
     end
 
-
     #### get user's answer
-    ansr = gets
+    begin
+      ansr = Integer(gets)
+      raise if ansr < 0 || ansr > answers.length()
+    rescue
+      puts "INVALID ENTRY! Please enter the number that corresponds to your answer."
+      retry
+    end
+
+
 
     #### determine if answer is correct
     if answers[ansr.to_i - 1] == q["correct"]
+      # increment score
       $score += 1 # no ++ in ruby?
       puts "That's correct!"
     else
@@ -51,7 +57,6 @@ def start_round
 
     #### increment question number
     $question_number += 1 # no ++ in ruby?
-
     puts "\n" # new line
   end
 
@@ -71,6 +76,7 @@ end
 while true
 
   puts "\n" # new line
+
   puts "Welcome to the Quiz Show!" + "\n" + "Choose your answers by entering the corresponding number."
 
   start_round()
