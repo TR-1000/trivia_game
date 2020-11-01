@@ -9,7 +9,7 @@ $questions_array = JSON.parse(json_string)
 
 
 #=================================================================
-# Quiz Logic
+# Quiz Logic Function
 #=================================================================
 
 def start_round
@@ -23,18 +23,24 @@ def start_round
   for q in $questions_array[0..9] do
     puts "\n" # new line
 
+    #### ask the question
     puts "Question #{$question_number}: #{q["question"]}"
 
+    #### shuffle and display answers
     answers = Array.new(q["incorrect"])
+
     answers.push(q["correct"]).shuffle!
 
-    for a in answers do
-      puts "(#{answers.index(a)}) #{a}"
+    answers.each_with_index do |val, idx|
+      puts "(#{idx + 1}) #{val}"
     end
 
-    response = gets
 
-    if answers[response.to_i] == q["correct"]
+    #### get user's answer
+    ansr = gets
+
+    #### determine if answer is correct
+    if answers[ansr.to_i - 1] == q["correct"]
       $score += 1 # no ++ in ruby?
       puts "That's correct!"
     else
@@ -43,6 +49,7 @@ def start_round
     end
     puts "Score: #{$score} pts"
 
+    #### increment question number
     $question_number += 1 # no ++ in ruby?
 
     puts "\n" # new line
@@ -58,7 +65,7 @@ end
 
 
 #=================================================================
-# Start Gameplay
+# Start Gameplay Loop
 #=================================================================
 
 while true
