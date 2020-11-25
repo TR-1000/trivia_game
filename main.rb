@@ -2,7 +2,7 @@ require 'json'
 
 
 # convert json data to string
-json_string = File.read("Apprentice_TandemFor400_Data.json")
+json_string = File.read("data.json")
 
 # parse and convert json string to hash
 $questions_array = JSON.parse(json_string)
@@ -42,8 +42,6 @@ def start_round
       retry
     end
 
-
-
     #### determine if answer is correct
     if answers[ansr.to_i - 1] == q["correct"]
       # increment score
@@ -67,6 +65,7 @@ def start_round
   end
 
 end
+#=================================================================
 
 
 #=================================================================
@@ -90,6 +89,6 @@ while true
   end
 
 end
-
+#=================================================================
 
 puts "Thanks for playing!"
